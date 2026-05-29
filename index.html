@@ -209,10 +209,9 @@
 
     /* ── 설문 페이지 ── */
     #survey .content {
-      max-width: 580px;
+      max-width: 620px;
       margin: 0 auto;
       padding: 2.5rem 1.5rem 4rem;
-      text-align: center;
     }
     #survey h2 {
       font-size: 1.7rem; font-weight: 800;
@@ -220,47 +219,277 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
+      text-align: center;
     }
     #survey .desc {
       color: var(--muted);
       font-size: 0.9rem;
       line-height: 1.7;
-      margin-bottom: 2.5rem;
-    }
-    .qr-wrap {
-      background: #fff;
-      display: inline-block;
-      border-radius: 20px;
-      padding: 1.2rem;
       margin-bottom: 2rem;
-      box-shadow: 0 0 40px rgba(124,58,237,0.3);
+      text-align: center;
     }
-    .qr-wrap img {
-      width: 200px; height: 200px;
-      display: block;
+
+    /* 진행 바 */
+    .quiz-progress-wrap {
+      margin-bottom: 2rem;
     }
-    .form-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: linear-gradient(135deg, #7c3aed, #4f46e5);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      font-family: inherit;
-      transition: all 0.25s;
-      box-shadow: 0 4px 20px rgba(124,58,237,0.4);
-    }
-    .form-link-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(124,58,237,0.55); }
-    .survey-note {
-      margin-top: 1.5rem;
+    .quiz-progress-info {
+      display: flex;
+      justify-content: space-between;
       font-size: 0.78rem;
       color: var(--muted);
+      margin-bottom: 0.5rem;
     }
+    .quiz-progress-bar {
+      height: 4px;
+      background: rgba(124,58,237,0.2);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* 질문 카드 */
+    .quiz-question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 1.8rem;
+      margin-bottom: 1.2rem;
+      animation: fadeInUp 0.35s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .quiz-q-num {
+      font-size: 0.72rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      font-weight: 700;
+    }
+    .quiz-q-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    /* 선택지 */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      color: #ccc;
+      user-select: none;
+    }
+    .quiz-option:hover {
+      border-color: var(--accent2);
+      background: rgba(124,58,237,0.1);
+      color: var(--text);
+    }
+    .quiz-option.selected {
+      border-color: var(--accent2);
+      background: rgba(124,58,237,0.18);
+      color: var(--text);
+    }
+    .quiz-option .opt-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .quiz-option.selected .opt-dot {
+      border-color: var(--accent2);
+      background: var(--accent2);
+    }
+    .quiz-option.selected .opt-dot::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    /* 네비게이션 버튼 */
+    .quiz-nav {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .quiz-btn {
+      flex: 1;
+      padding: 0.9rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.25s;
+      border: none;
+    }
+    .quiz-btn-prev {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .quiz-btn-prev:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .quiz-btn-next {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+    }
+    .quiz-btn-next:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(124,58,237,0.55); }
+    .quiz-btn-next:disabled {
+      opacity: 0.4; cursor: not-allowed; transform: none;
+      box-shadow: none;
+    }
+
+    /* 결과 화면 */
+    .quiz-result {
+      display: none;
+      animation: fadeInUp 0.4s ease;
+    }
+    .quiz-result.show { display: block; }
+    .result-hero {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+    }
+    .result-emoji {
+      font-size: 4rem;
+      margin-bottom: 0.8rem;
+      display: block;
+      animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.3); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .result-type-label {
+      font-size: 0.75rem;
+      color: var(--accent2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .result-type-name {
+      font-size: 1.7rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #c084fc, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+      line-height: 1.2;
+    }
+    .result-type-en {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .result-score-bar-wrap {
+      margin: 1.5rem 0;
+    }
+    .result-score-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.82rem;
+    }
+    .result-score-label {
+      width: 110px;
+      flex-shrink: 0;
+      color: var(--muted);
+      text-align: right;
+    }
+    .result-score-track {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .result-score-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      transition: width 0.8s ease 0.2s;
+    }
+    .result-score-val {
+      width: 28px;
+      text-align: right;
+      color: var(--accent2);
+      font-weight: 700;
+    }
+    .result-desc-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #ccc;
+    }
+    .result-desc-card h4 {
+      font-size: 0.85rem;
+      color: var(--accent2);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .result-cta-row {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.8rem;
+    }
+    .result-cta-btn {
+      flex: 1;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+      text-align: center;
+    }
+    .result-cta-guide {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+    }
+    .result-cta-guide:hover { transform: translateY(-2px); }
+    .result-cta-retry {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .result-cta-retry:hover { background: rgba(255,255,255,0.1); color: var(--text); }
 
     /* ── 가이드북 ── */
     #guide .content {
@@ -450,20 +679,76 @@
     <span class="header-title">SNS 피로유형 자가진단</span>
   </div>
   <div class="content">
-    <h2>나의 피로 유형은?</h2>
-    <p class="desc">
-      아래 설문을 통해 나의 SNS 피로 유형을 알아보세요.<br>
-      정답이 없으니 평소 느끼는 대로 솔직하게 응답해 주세요.
-    </p>
-    <div class="qr-wrap">
-      <img src="qr.png" alt="SNS 피로유형 자가진단 QR코드" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div style="display:none;width:200px;height:200px;align-items:center;justify-content:center;color:#aaa;font-size:0.8rem;text-align:center">QR 이미지를<br>qr.png로 저장해주세요</div>
+
+    <!-- 인트로 -->
+    <div id="quiz-intro">
+      <h2>나의 피로 유형은?</h2>
+      <p class="desc">
+        12개의 질문에 솔직하게 답하면 나의 SNS 피로 유형을 알 수 있어요.<br>
+        정답이 없으니 평소 느끼는 대로 응답해 주세요.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:0.8rem;margin-bottom:2rem;">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:1.6rem">😔</span>
+          <div><div style="font-size:0.78rem;color:var(--accent2);font-weight:700;margin-bottom:0.2rem">유형 1</div><div style="font-size:0.88rem;font-weight:700">나는 왜 이럴까 형</div></div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:1.6rem">🤯</span>
+          <div><div style="font-size:0.78rem;color:var(--accent2);font-weight:700;margin-bottom:0.2rem">유형 2</div><div style="font-size:0.88rem;font-weight:700">방금 뭐봤지 형</div></div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:1.6rem">😰</span>
+          <div><div style="font-size:0.78rem;color:var(--accent2);font-weight:700;margin-bottom:0.2rem">유형 3</div><div style="font-size:0.88rem;font-weight:700">들락날락 형</div></div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:1.6rem">📵</span>
+          <div><div style="font-size:0.78rem;color:var(--accent2);font-weight:700;margin-bottom:0.2rem">유형 4</div><div style="font-size:0.88rem;font-weight:700">이번엔 진짜 끊는다 형</div></div>
+        </div>
+      </div>
+      <button class="quiz-btn quiz-btn-next" style="width:100%;padding:1.1rem;" onclick="startQuiz()">🔍 자가진단 시작하기</button>
     </div>
-    <br>
-    <a class="form-link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd68Mo992Cbopoo2DF4c6hxRGpZ5gsogbsXDBG160BLV2WL3g/viewform?usp=header" target="_blank">
-      📋 설문 시작하기
-    </a>
-    <p class="survey-note">QR코드를 스캔하거나 버튼을 눌러 설문에 참여하세요.<br>응답 결과는 연구 목적 외에는 사용되지 않습니다.</p>
+
+    <!-- 퀴즈 진행 -->
+    <div id="quiz-body" style="display:none;">
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-info">
+          <span id="q-progress-text">1 / 12</span>
+          <span id="q-progress-pct">0%</span>
+        </div>
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="q-progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="quiz-question-area"></div>
+      <div class="quiz-nav">
+        <button class="quiz-btn quiz-btn-prev" id="btn-prev" onclick="quizPrev()">← 이전</button>
+        <button class="quiz-btn quiz-btn-next" id="btn-next" onclick="quizNext()" disabled>다음 →</button>
+      </div>
+    </div>
+
+    <!-- 결과 -->
+    <div id="quiz-result" class="quiz-result">
+      <div class="result-hero">
+        <span class="result-emoji" id="res-emoji">😔</span>
+        <div class="result-type-label">나의 SNS 피로 유형</div>
+        <div class="result-type-name" id="res-name">상향 비교형</div>
+        <div class="result-type-en" id="res-en">Upward Social Comparison Type</div>
+      </div>
+      <div id="res-score-bars" class="result-score-bar-wrap"></div>
+      <div class="result-desc-card">
+        <h4>🔍 유형 특징</h4>
+        <p id="res-desc"></p>
+      </div>
+      <div class="result-desc-card">
+        <h4>💡 핵심 인사이트</h4>
+        <p id="res-insight"></p>
+      </div>
+      <div class="result-cta-row">
+        <button class="result-cta-btn result-cta-guide" onclick="showPage('guide')">📚 유형별 가이드 보기</button>
+        <button class="result-cta-btn result-cta-retry" onclick="retryQuiz()">🔄 다시 진단하기</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -591,6 +876,247 @@
       target.classList.add('active');
       window.scrollTo(0, 0);
     }
+  }
+
+  /* ====================================================
+     자가진단 퀴즈 데이터 & 로직
+     문항 출처: SNS 피로 4유형 측정 문항 (각 유형당 3문항)
+     유형 코드: A=비교형, B=정보과부하형, C=FOMO불안형, D=통제상실형
+     점수 척도: 1~5점 (3~15점/유형)
+     문항 순서: 유형 순환 배치 (1·4·7·10 → 2·5·8·11 → 3·6·9·12)
+  ==================================================== */
+
+  // 원본 문항 (유형별 순서)
+  const RAW_QUESTIONS = [
+    { text: "다른 사람의 게시물을 보면 나와 비교하게 되어 기분이 나빠진 적이 있다.", type: "A" },
+    { text: "SNS 속 친구들의 삶이 나보다 더 행복해 보인다고 느낀다.", type: "A" },
+    { text: "친구의 여행·맛집·성취 게시물을 보면 내 일상이 초라하게 느껴진다.", type: "A" },
+    { text: "알림이 너무 많아 스트레스를 느낀 적이 있다.", type: "B" },
+    { text: "SNS·메신저 알림이 울릴 때마다 하던 일에 집중이 깨진다.", type: "B" },
+    { text: "SNS를 한참 보고 나면 무엇을 봤는지 잘 기억나지 않는다.", type: "B" },
+    { text: "SNS를 보지 않으면 불안하거나 뒤처지는 느낌이 든다.", type: "C" },
+    { text: "친구들이 나 없이 모인 게시물을 보면 소외감을 느낀다.", type: "C" },
+    { text: "새로운 알림이 없는데도 습관적으로 앱을 자주 열어본다.", type: "C" },
+    { text: "짧은 영상(쇼츠·릴스·틱톡)을 보다가 예상보다 훨씬 오래 시간이 흘러간 적이 있다.", type: "D" },
+    { text: "SNS를 줄이려 시도했지만 다시 사용량이 늘어난 적이 있다.", type: "D" },
+    { text: "SNS를 사용한 후 시간을 낭비했다는 후회나 자책감이 든다.", type: "D" }
+  ];
+
+  // 순환 배치: 1·4·7·10 → 2·5·8·11 → 3·6·9·12 (0-indexed: 0·3·6·9 → 1·4·7·10 → 2·5·8·11)
+  const QUESTION_ORDER = [0,3,6,9, 1,4,7,10, 2,5,8,11];
+  const QUESTIONS = QUESTION_ORDER.map(i => RAW_QUESTIONS[i]);
+
+  const TYPE_INFO = {
+    A: {
+      emoji: "😔",
+      name: "나는 왜 이럴까 형",
+      en: "Upward Social Comparison Type",
+      label: "나는 왜 이럴까 형",
+      color: "#60a5fa",
+      desc: "SNS에서 타인의 완성된 모습을 보며 자신과 끊임없이 비교하는 경향이 있습니다. 필터링된 현실과 나의 평범한 일상을 비교하면서 자존감이 낮아질 수 있어요. 수동적 SNS 이용(스크롤만 하는 행동)이 특히 이런 감정을 강화합니다.",
+      insight: "SNS는 '행복한 순간만 게시되는 공간'입니다. 타인의 Best와 나의 Average를 비교하지 마세요."
+    },
+    B: {
+      emoji: "🤯",
+      name: "방금 뭐봤지 형",
+      en: "Cognitive Overload & Attention Fragmentation Type",
+      label: "방금 뭐 봤지 형",
+      color: "#fb923c",
+      desc: "빠르게 전환되는 콘텐츠를 다량 소비하며 작업기억이 과부하 상태에 이릅니다. 알림 스트레스, 집중력 저하, '많이 봤는데 기억에 없는' 경험이 반복되는 유형입니다.",
+      insight: "많이 봐서 피곤한 것이 아니라, 정리 없이 소비해서 피곤한 것입니다."
+    },
+    C: {
+      emoji: "😰",
+      name: "들락날락 형",
+      en: "Fear of Missing Out Type",
+      label: "들락날락 형",
+      color: "#4ade80",
+      desc: "놓칠까 봐 두렵다는 심리(FOMO)와 소외감이 반복 확인 행동을 강화합니다. SNS를 자주 열수록 실제 만족도는 낮아지는데, 그럼에도 확인을 멈추지 못하는 순환에 빠져 있는 유형입니다.",
+      insight: "문제는 SNS가 아니라, '놓치면 안 된다'는 믿음 자체입니다."
+    },
+    D: {
+      emoji: "✂️",
+      name: "이번엔 진짜 끊는다 형",
+      en: "Self-Control Loss & Digital Minimalism Type",
+      label: "이번엔 진짜 끊는다 형",
+      color: "#f87171",
+      desc: "줄이려 해도 다시 늘어나는 사용량, 예상보다 오래 소비한 시간, 그 후의 자책감이 반복되는 유형입니다. 의지보다 행동 설계(환경 변화, 루틴 재구성)가 핵심 해결책입니다.",
+      insight: "비교 중심 삶 → 축적 중심 삶으로의 전환. 이미 그 방향을 향하고 있습니다."
+    }
+  };
+
+  // 등급 판정 (유형별 3~15점)
+  function getGrade(score) {
+    if (score <= 6)  return { label: "거의 없음",   color: "#4ade80" };
+    if (score <= 9)  return { label: "경미",         color: "#facc15" };
+    if (score <= 12) return { label: "뚜렷함 ⚠️",   color: "#fb923c" };
+    return               { label: "심각 🔴",        color: "#f87171" };
+  }
+
+  // 전체 피로 지수 등급 (12~60점)
+  function getTotalGrade(total) {
+    if (total <= 24) return "건강 사용형";
+    if (total <= 36) return "경미~중간 피로형";
+    if (total <= 48) return "고피로형";
+    return "번아웃형";
+  }
+
+  let currentQ = 0;
+  let answers = new Array(QUESTIONS.length).fill(null);
+
+  const OPTIONS = [
+    { label: "전혀 그렇지 않다", score: 1 },
+    { label: "그렇지 않다",      score: 2 },
+    { label: "보통이다",          score: 3 },
+    { label: "그렇다",            score: 4 },
+    { label: "매우 그렇다",       score: 5 }
+  ];
+
+  function startQuiz() {
+    currentQ = 0;
+    answers = new Array(QUESTIONS.length).fill(null);
+    document.getElementById('quiz-intro').style.display = 'none';
+    document.getElementById('quiz-result').classList.remove('show');
+    document.getElementById('quiz-body').style.display = 'block';
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = QUESTIONS[currentQ];
+    const total = QUESTIONS.length;
+    const pct = Math.round((currentQ / total) * 100);
+
+    document.getElementById('q-progress-text').textContent = `${currentQ + 1} / ${total}`;
+    document.getElementById('q-progress-pct').textContent = `${pct}%`;
+    document.getElementById('q-progress-fill').style.width = `${pct}%`;
+    document.getElementById('btn-prev').style.display = currentQ === 0 ? 'none' : '';
+
+    const btnNext = document.getElementById('btn-next');
+    btnNext.textContent = currentQ === total - 1 ? '결과 보기 ✨' : '다음 →';
+    btnNext.disabled = answers[currentQ] === null;
+
+    const area = document.getElementById('quiz-question-area');
+    area.innerHTML = `
+      <div class="quiz-question-card">
+        <div class="quiz-q-num">Q${currentQ + 1}</div>
+        <div class="quiz-q-text">${q.text}</div>
+        <div class="quiz-options">
+          ${OPTIONS.map((o, i) => `
+            <div class="quiz-option${answers[currentQ] === i ? ' selected' : ''}"
+                 onclick="selectOption(${i})">
+              <div class="opt-dot"></div>
+              <span>${o.label}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function selectOption(idx) {
+    answers[currentQ] = idx;
+    document.querySelectorAll('.quiz-option').forEach((el, i) => {
+      el.classList.toggle('selected', i === idx);
+    });
+    document.getElementById('btn-next').disabled = false;
+  }
+
+  function quizNext() {
+    if (answers[currentQ] === null) return;
+    if (currentQ < QUESTIONS.length - 1) {
+      currentQ++;
+      renderQuestion();
+      window.scrollTo(0, 0);
+    } else {
+      showResult();
+    }
+  }
+
+  function quizPrev() {
+    if (currentQ > 0) {
+      currentQ--;
+      renderQuestion();
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function showResult() {
+    // 유형별 점수 합산 (1~5점 척도 → 유형당 3~15점)
+    const scores = { A: 0, B: 0, C: 0, D: 0 };
+    QUESTIONS.forEach((q, i) => {
+      if (answers[i] !== null) scores[q.type] += OPTIONS[answers[i]].score;
+    });
+
+    const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+
+    // 주 유형: 점수 최고
+    const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const dominant = sorted[0][0];
+
+    // 복합형 판정: 10점 이상 유형이 2개 이상
+    const highTypes = Object.entries(scores).filter(([, s]) => s >= 10);
+    const isComplex = highTypes.length >= 2;
+
+    const info = TYPE_INFO[dominant];
+
+    document.getElementById('quiz-body').style.display = 'none';
+    const result = document.getElementById('quiz-result');
+    result.classList.add('show');
+
+    // 복합형이면 이름 앞에 표시
+    document.getElementById('res-emoji').textContent = isComplex ? '🔀' : info.emoji;
+    document.getElementById('res-name').textContent = isComplex
+      ? `복합형 (주: ${info.name})`
+      : info.name;
+    document.getElementById('res-en').textContent = isComplex
+      ? `Complex Type — ${highTypes.map(([t]) => TYPE_INFO[t].name).join(' + ')}`
+      : info.en;
+    document.getElementById('res-desc').textContent = isComplex
+      ? `두 가지 이상의 피로 유형이 복합적으로 나타나고 있습니다. 특히 ${highTypes.map(([t]) => TYPE_INFO[t].name).join('과 ')}에서 뚜렷한 피로가 확인되었어요. 각 유형의 가이드를 함께 참고하면 효과적입니다.`
+      : info.desc;
+    document.getElementById('res-insight').textContent = info.insight;
+
+    // 전체 피로 지수
+    const totalGrade = getTotalGrade(totalScore);
+    const totalPct = Math.round((totalScore - 12) / 48 * 100);
+
+    // 점수 막대
+    const barsHtml = `
+      <div style="margin-bottom:1.2rem;padding:1rem 1.2rem;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.25);border-radius:12px;">
+        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem;">전체 피로 지수 (${totalScore}점 / 60점)</div>
+        <div style="font-size:1.05rem;font-weight:800;color:#c084fc;margin-bottom:0.6rem;">${totalGrade}</div>
+        <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;">
+          <div style="height:100%;width:${totalPct}%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:99px;transition:width 0.8s ease 0.1s;"></div>
+        </div>
+      </div>
+      ${sorted.map(([t, s]) => {
+        const g = getGrade(s);
+        const pct = Math.round((s - 3) / 12 * 100);
+        const isDom = t === dominant;
+        return `
+          <div class="result-score-row">
+            <div class="result-score-label" style="color:${isDom ? TYPE_INFO[t].color : 'var(--muted)'}">
+              ${TYPE_INFO[t].emoji} ${TYPE_INFO[t].name.replace(' 피로','')}
+            </div>
+            <div class="result-score-track">
+              <div class="result-score-fill" style="width:${pct}%;background:linear-gradient(90deg,${TYPE_INFO[t].color}aa,${TYPE_INFO[t].color});${isDom ? '' : 'opacity:0.4'}"></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.4rem;min-width:90px;justify-content:flex-end;">
+              <span style="font-size:0.7rem;color:${g.color};font-weight:700;">${g.label}</span>
+              <span class="result-score-val">${s}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    `;
+    document.getElementById('res-score-bars').innerHTML = barsHtml;
+
+    window.scrollTo(0, 0);
+  }
+
+  function retryQuiz() {
+    document.getElementById('quiz-result').classList.remove('show');
+    document.getElementById('quiz-intro').style.display = 'block';
   }
 </script>
 </body>
