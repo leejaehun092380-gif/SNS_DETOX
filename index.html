@@ -710,7 +710,24 @@
           <div><div style="font-size:0.78rem;color:var(--accent2);font-weight:700;margin-bottom:0.2rem">유형 4</div><div style="font-size:0.88rem;font-weight:700">이번엔 진짜 끊는다 형</div></div>
         </div>
       </div>
-      <button class="quiz-btn quiz-btn-next" style="width:100%;padding:1.1rem;" onclick="startQuiz()">🔍 자가진단 시작하기</button>
+      <!-- 이름 입력 -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.2rem;">
+        <label style="display:block;font-size:0.85rem;color:var(--accent2);font-weight:700;margin-bottom:0.6rem;">이름 입력</label>
+        <input
+          id="user-name-input"
+          type="text"
+          placeholder="이름을 입력해 주세요"
+          maxlength="20"
+          style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;transition:border 0.2s;"
+          oninput="document.getElementById('quiz-start-btn').disabled = this.value.trim() === '';"
+          onfocus="this.style.borderColor='var(--accent2)'"
+          onblur="this.style.borderColor='rgba(124,58,237,0.25)'"
+        />
+        <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);line-height:1.6;">
+          ※ 수집된 이름은 <strong style="color:#c084fc">연구 목적 이외에는 사용되지 않으며</strong>, 설문 결과 분석을 위해서만 활용됩니다.
+        </p>
+      </div>
+      <button id="quiz-start-btn" class="quiz-btn quiz-btn-next" style="width:100%;padding:1.1rem;" onclick="startQuiz()" disabled>🔍 자가진단 시작하기</button>
     </div>
 
     <!-- 퀴즈 진행 -->
@@ -1111,12 +1128,47 @@
     `;
     document.getElementById('res-score-bars').innerHTML = barsHtml;
 
+    // ── Google Sheets 데이터 전송 ──
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzDWwRun7Tj1emPtogm5uAnn23Gt8nr1N4m0VT_MABbucn2GbWlGxpJ2uet-OzZeILU/exec";
+
+    const payload = {
+      name: document.getElementById('user-name-input').value.trim(),
+      timestamp: new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" }),
+      q1:  OPTIONS[answers[0]].score,
+      q2:  OPTIONS[answers[1]].score,
+      q3:  OPTIONS[answers[2]].score,
+      q4:  OPTIONS[answers[3]].score,
+      q5:  OPTIONS[answers[4]].score,
+      q6:  OPTIONS[answers[5]].score,
+      q7:  OPTIONS[answers[6]].score,
+      q8:  OPTIONS[answers[7]].score,
+      q9:  OPTIONS[answers[8]].score,
+      q10: OPTIONS[answers[9]].score,
+      q11: OPTIONS[answers[10]].score,
+      q12: OPTIONS[answers[11]].score,
+      score_A: scores.A,
+      score_B: scores.B,
+      score_C: scores.C,
+      score_D: scores.D,
+      total: totalScore,
+      result: isComplex
+        ? `복합형(${highTypes.map(([t]) => TYPE_INFO[t].name).join("+")})`
+        : info.name
+    };
+
+    fetch(GAS_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    }).catch(() => {}); // 전송 실패해도 결과 화면에 영향 없음
+
     window.scrollTo(0, 0);
   }
 
   function retryQuiz() {
     document.getElementById('quiz-result').classList.remove('show');
     document.getElementById('quiz-intro').style.display = 'block';
+    document.getElementById('user-name-input').value = '';
+    document.getElementById('quiz-start-btn').disabled = true;
   }
 </script>
 </body>
